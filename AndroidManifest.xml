@@ -23,12 +23,12 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <uses-permission android:name="com.le.chengaaabb.shell.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="替换包名.permission.JPUSH_MESSAGE" />
 
     <uses-sdk android:targetSdkVersion="22"/>
 
     <permission
-        android:name="com.le.chengaaabb.shell.permission.JPUSH_MESSAGE"
+        android:name="替换包名.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
     <application
@@ -117,15 +117,15 @@
 
         <provider
             android:name="cn.jpush.android.service.DataProvider"
-            android:authorities="com.le.chengaaabb.shell.DataProvider"
+            android:authorities="替换包名.DataProvider"
             android:exported="false" />
         <provider
             android:name="cn.jpush.android.service.DownloadProvider"
-            android:authorities="com.le.chengaaabb.shell.DownloadProvider"
+            android:authorities="替换包名.DownloadProvider"
             android:exported="true" />
         <provider
             android:name="ezy.boost.update.UpdateFileProvider"
-            android:authorities="com.le.chengaaabb.shell.updatefileprovider"
+            android:authorities="替换包名.updatefileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
