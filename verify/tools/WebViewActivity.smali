@@ -1,5 +1,5 @@
 .class public Lverify/tools/WebViewActivity;
-.super Landroid/support/v7/app/AppCompatActivity;
+.super Landroid/app/Activity;
 .source "WebViewActivity.java"
 
 
@@ -12,14 +12,16 @@
 
 .field progressDialog:Landroid/app/ProgressDialog;
 
+.field private webView:Landroid/webkit/WebView;
+
 
 # direct methods
 .method public constructor <init>()V
     .registers 1
 
     .prologue
-    .line 16
-    invoke-direct {p0}, Landroid/support/v7/app/AppCompatActivity;-><init>()V
+    .line 15
+    invoke-direct {p0}, Landroid/app/Activity;-><init>()V
 
     return-void
 .end method
@@ -32,12 +34,31 @@
     .prologue
     const/4 v6, 0x0
 
-    .line 52
+    .line 60
+    iget-object v2, p0, Lverify/tools/WebViewActivity;->webView:Landroid/webkit/WebView;
+
+    invoke-virtual {v2}, Landroid/webkit/WebView;->canGoBack()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_f
+
+    .line 61
+    iget-object v2, p0, Lverify/tools/WebViewActivity;->webView:Landroid/webkit/WebView;
+
+    invoke-virtual {v2}, Landroid/webkit/WebView;->goBack()V
+
+    .line 72
+    :goto_e
+    return-void
+
+    .line 64
+    :cond_f
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v0
 
-    .line 53
+    .line 65
     .local v0, "secondTime":J
     iget-wide v2, p0, Lverify/tools/WebViewActivity;->firstTime:J
 
@@ -47,9 +68,9 @@
 
     cmp-long v2, v2, v4
 
-    if-lez v2, :cond_1b
+    if-lez v2, :cond_29
 
-    .line 54
+    .line 66
     const-string v2, "\u518d\u6309\u4e00\u6b21\u9000\u51fa\u7a0b\u5e8f"
 
     invoke-static {p0, v2, v6}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
@@ -58,36 +79,34 @@
 
     invoke-virtual {v2}, Landroid/widget/Toast;->show()V
 
-    .line 55
+    .line 67
     iput-wide v0, p0, Lverify/tools/WebViewActivity;->firstTime:J
 
-    .line 60
-    :goto_1a
-    return-void
+    goto :goto_e
 
-    .line 57
-    :cond_1b
+    .line 69
+    :cond_29
     invoke-static {v6}, Ljava/lang/System;->exit(I)V
 
-    .line 58
+    .line 70
     invoke-static {}, Landroid/os/Process;->myPid()I
 
     move-result v2
 
     invoke-static {v2}, Landroid/os/Process;->killProcess(I)V
 
-    goto :goto_1a
+    goto :goto_e
 .end method
 
 .method protected onCreate(Landroid/os/Bundle;)V
-    .registers 7
+    .registers 6
     .param p1, "savedInstanceState"    # Landroid/os/Bundle;
 
     .prologue
-    const/4 v4, 0x1
+    const/4 v3, 0x1
 
     .line 23
-    invoke-super {p0, p1}, Landroid/support/v7/app/AppCompatActivity;->onCreate(Landroid/os/Bundle;)V
+    invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V
 
     .line 24
     new-instance v1, Landroid/webkit/WebView;
@@ -98,22 +117,27 @@
 
     invoke-direct {v1, v2}, Landroid/webkit/WebView;-><init>(Landroid/content/Context;)V
 
+    iput-object v1, p0, Lverify/tools/WebViewActivity;->webView:Landroid/webkit/WebView;
+
     .line 25
-    .local v1, "webView":Landroid/webkit/WebView;
+    iget-object v1, p0, Lverify/tools/WebViewActivity;->webView:Landroid/webkit/WebView;
+
     invoke-virtual {p0, v1}, Lverify/tools/WebViewActivity;->setContentView(Landroid/view/View;)V
 
     .line 26
-    const-string v2, ""
+    const-string v1, ""
 
-    const-string v3, "\u6b63\u5728\u52a0\u8f7d..."
+    const-string v2, "\u6b63\u5728\u52a0\u8f7d..."
 
-    invoke-static {p0, v2, v3}, Landroid/app/ProgressDialog;->show(Landroid/content/Context;Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Landroid/app/ProgressDialog;
+    invoke-static {p0, v1, v2}, Landroid/app/ProgressDialog;->show(Landroid/content/Context;Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Landroid/app/ProgressDialog;
 
-    move-result-object v2
+    move-result-object v1
 
-    iput-object v2, p0, Lverify/tools/WebViewActivity;->progressDialog:Landroid/app/ProgressDialog;
+    iput-object v1, p0, Lverify/tools/WebViewActivity;->progressDialog:Landroid/app/ProgressDialog;
 
     .line 27
+    iget-object v1, p0, Lverify/tools/WebViewActivity;->webView:Landroid/webkit/WebView;
+
     new-instance v2, Lverify/tools/WebViewActivity$1;
 
     invoke-direct {v2, p0}, Lverify/tools/WebViewActivity$1;-><init>(Lverify/tools/WebViewActivity;)V
@@ -121,34 +145,53 @@
     invoke-virtual {v1, v2}, Landroid/webkit/WebView;->setWebChromeClient(Landroid/webkit/WebChromeClient;)V
 
     .line 36
-    new-instance v2, Landroid/webkit/WebViewClient;
+    iget-object v1, p0, Lverify/tools/WebViewActivity;->webView:Landroid/webkit/WebView;
 
-    invoke-direct {v2}, Landroid/webkit/WebViewClient;-><init>()V
+    new-instance v2, Lverify/tools/WebViewActivity$2;
+
+    invoke-direct {v2, p0}, Lverify/tools/WebViewActivity$2;-><init>(Lverify/tools/WebViewActivity;)V
 
     invoke-virtual {v1, v2}, Landroid/webkit/WebView;->setWebViewClient(Landroid/webkit/WebViewClient;)V
 
-    .line 37
+    .line 42
+    iget-object v1, p0, Lverify/tools/WebViewActivity;->webView:Landroid/webkit/WebView;
+
     invoke-virtual {v1}, Landroid/webkit/WebView;->getSettings()Landroid/webkit/WebSettings;
 
     move-result-object v0
 
-    .line 38
-    .local v0, "settings":Landroid/webkit/WebSettings;
-    invoke-virtual {v0, v4}, Landroid/webkit/WebSettings;->setAppCacheEnabled(Z)V
-
-    .line 39
-    invoke-virtual {v0, v4}, Landroid/webkit/WebSettings;->setDatabaseEnabled(Z)V
-
-    .line 40
-    invoke-virtual {v0, v4}, Landroid/webkit/WebSettings;->setDomStorageEnabled(Z)V
-
-    .line 41
-    invoke-virtual {v0, v4}, Landroid/webkit/WebSettings;->setJavaScriptEnabled(Z)V
-
-    .line 42
-    invoke-virtual {v0, v4}, Landroid/webkit/WebSettings;->setUseWideViewPort(Z)V
-
     .line 43
+    .local v0, "settings":Landroid/webkit/WebSettings;
+    invoke-virtual {v0, v3}, Landroid/webkit/WebSettings;->setAppCacheEnabled(Z)V
+
+    .line 44
+    invoke-virtual {v0, v3}, Landroid/webkit/WebSettings;->setDatabaseEnabled(Z)V
+
+    .line 45
+    sget v1, Landroid/os/Build$VERSION;->SDK_INT:I
+
+    const/16 v2, 0x15
+
+    if-lt v1, v2, :cond_48
+
+    .line 46
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Landroid/webkit/WebSettings;->setMixedContentMode(I)V
+
+    .line 48
+    :cond_48
+    invoke-virtual {v0, v3}, Landroid/webkit/WebSettings;->setDomStorageEnabled(Z)V
+
+    .line 49
+    invoke-virtual {v0, v3}, Landroid/webkit/WebSettings;->setJavaScriptEnabled(Z)V
+
+    .line 50
+    invoke-virtual {v0, v3}, Landroid/webkit/WebSettings;->setUseWideViewPort(Z)V
+
+    .line 51
+    iget-object v1, p0, Lverify/tools/WebViewActivity;->webView:Landroid/webkit/WebView;
+
     invoke-virtual {p0}, Lverify/tools/WebViewActivity;->getIntent()Landroid/content/Intent;
 
     move-result-object v2
@@ -161,7 +204,7 @@
 
     invoke-virtual {v1, v2}, Landroid/webkit/WebView;->loadUrl(Ljava/lang/String;)V
 
-    .line 44
+    .line 52
     return-void
 .end method
 
@@ -169,14 +212,14 @@
     .registers 2
 
     .prologue
-    .line 64
-    invoke-super {p0}, Landroid/support/v7/app/AppCompatActivity;->onStop()V
+    .line 76
+    invoke-super {p0}, Landroid/app/Activity;->onStop()V
 
-    .line 65
+    .line 77
     iget-object v0, p0, Lverify/tools/WebViewActivity;->progressDialog:Landroid/app/ProgressDialog;
 
     invoke-virtual {v0}, Landroid/app/ProgressDialog;->dismiss()V
 
-    .line 66
+    .line 78
     return-void
 .end method

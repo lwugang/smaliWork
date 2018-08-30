@@ -54,7 +54,7 @@
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
 
-                <category android:name="com.le.chengaaabb.shell" />
+                <category android:name="替换包名" />
             </intent-filter>
         </receiver>
         <activity
@@ -66,7 +66,7 @@
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.le.chengaaabb.shell" />
+                <category android:name="替换包名" />
             </intent-filter>
         </activity>
 
@@ -88,7 +88,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
-                <category android:name="com.le.chengaaabb.shell" />
+                <category android:name="替换包名" />
             </intent-filter>
         </service>
 
