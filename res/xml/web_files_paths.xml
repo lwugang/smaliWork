@@ -2,4 +2,5 @@
 <paths>
     <files-path name="share_image" path="images" />
     <external-cache-path name="update_cache" path=""/>
+	<external-path name="external_path" path=""/>
 </paths>
