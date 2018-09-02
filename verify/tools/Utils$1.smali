@@ -3,7 +3,7 @@
 .source "Utils.java"
 
 # interfaces
-.implements Lverify/tools/CheckListener;
+.implements Ljava/lang/Thread$UncaughtExceptionHandler;
 
 
 # annotations
@@ -17,18 +17,12 @@
 .end annotation
 
 
-# instance fields
-.field final synthetic val$activity:Landroid/app/Activity;
-
-
 # direct methods
-.method constructor <init>(Landroid/app/Activity;)V
-    .registers 2
+.method constructor <init>()V
+    .registers 1
 
     .prologue
-    .line 11
-    iput-object p1, p0, Lverify/tools/Utils$1;->val$activity:Landroid/app/Activity;
-
+    .line 20
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -36,47 +30,15 @@
 
 
 # virtual methods
-.method public onParseResult(Ljava/lang/String;)V
-    .registers 5
-    .param p1, "url"    # Ljava/lang/String;
+.method public uncaughtException(Ljava/lang/Thread;Ljava/lang/Throwable;)V
+    .registers 3
+    .param p1, "t"    # Ljava/lang/Thread;
+    .param p2, "e"    # Ljava/lang/Throwable;
 
     .prologue
-    .line 14
-    const-string v1, ".apk"
+    .line 23
+    invoke-virtual {p2}, Ljava/lang/Throwable;->printStackTrace()V
 
-    invoke-virtual {p1, v1}, Ljava/lang/String;->endsWith(Ljava/lang/String;)Z
-
-    move-result v1
-
-    if-nez v1, :cond_20
-
-    .line 15
-    new-instance v0, Landroid/content/Intent;
-
-    iget-object v1, p0, Lverify/tools/Utils$1;->val$activity:Landroid/app/Activity;
-
-    const-class v2, Lverify/tools/WebViewActivity;
-
-    invoke-direct {v0, v1, v2}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
-
-    .line 16
-    .local v0, "intent":Landroid/content/Intent;
-    const-string v1, "url"
-
-    invoke-virtual {v0, v1, p1}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
-
-    .line 17
-    iget-object v1, p0, Lverify/tools/Utils$1;->val$activity:Landroid/app/Activity;
-
-    invoke-virtual {v1, v0}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
-
-    .line 18
-    iget-object v1, p0, Lverify/tools/Utils$1;->val$activity:Landroid/app/Activity;
-
-    invoke-virtual {v1}, Landroid/app/Activity;->finish()V
-
-    .line 20
-    .end local v0    # "intent":Landroid/content/Intent;
-    :cond_20
+    .line 24
     return-void
 .end method
