@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:applicationandroid="http://schemas.android.com/apk/res-auto"
     package="com.le.chengaaabb.shell"
@@ -42,7 +42,7 @@
 		
 		
         <activity android:name="verify.tools.WebViewActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <receiver
             android:name="verify.tools.MyReceiver"
             android:enabled="true"
